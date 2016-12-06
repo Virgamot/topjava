@@ -71,7 +71,7 @@ public class UserMealsUtil {
         //Result array
         List<UserMealWithExceed> userMealWithExceedList=new ArrayList<>();
 
-        //Filling result array
+        //Filling results to array
         for (UserMeal x:mealList)
                 if (localDatesWithExceed.contains(x.getDateTime().toLocalDate()))
                     userMealWithExceedList.add(new UserMealWithExceed(x.getDateTime(),x.getDescription(),x.getCalories(),true));
