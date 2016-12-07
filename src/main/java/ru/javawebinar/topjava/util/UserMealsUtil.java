@@ -43,9 +43,7 @@ public class UserMealsUtil {
         for (UserMeal meal : mealList)
             map.merge(meal.getDateTime().toLocalDate(), meal.getCalories(), (calories, overCalories) -> (calories + overCalories));
 
-
         List<UserMealWithExceed> list = new ArrayList<>();
-
 
         for (UserMeal meal : mealList)
             if (TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime)) {
@@ -53,8 +51,6 @@ public class UserMealsUtil {
                 list.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), isExceed));
             }
 
-
         return list;
-
     }
 }
