@@ -81,17 +81,4 @@ public class MealDaoImpl implements MealDao {
         return meals;
     }
 
-   /* public static void main(String[] args) {
-
-         MealDao mealDao=new MealDaoImpl();
-        System.out.println(mealDao.list().size());
-
-        for (Meal meal:mealDao.list())
-            System.out.println(meal.getId());
-
-        System.out.println();
-
-        System.out.println(mealDao.getById(6).getDescription());
-
-    }*/
 }
