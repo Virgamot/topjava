@@ -56,19 +56,30 @@
 
 <table class="tg">
     <tr>
+        <th width="60">ID</th>
         <th width="120">Дата / Время</th>
         <th width="120">Описание</th>
         <th width="80">Калории</th>
+        <th width="80" colspan="2">Action</th>
     </tr>
 <%--@elvariable id="meals" type="java.util.List"--%>
 <c:forEach items="${meals}" var="meal" >
     <tr ${meal.exceed ? 'style="color: red"' : 'style="color: green"'}   >
+    <td>${meal.getId()}</td>
     <td>${meal.getDateTime().toLocalDate()}  ${meal.getDateTime().toLocalTime()}</td>
     <td>${meal.getDescription()}</td>
     <td>${meal.getCalories()}</td>
+        <td><a href="meals?action=delete&mealId=<c:out value="${meal.getId()}"/>">Delete</a></td>
+        <td><a href="meals?action=edit&mealId=<c:out value="${meal.getId()}"/>">Edit</a></td>
     </tr>
 </c:forEach>
 </table>
+
+<form action="meals">
+    <input type="hidden" name="action" value="insert">
+    <button type="submit">Add meal</button>
+</form>
+
 
 </body>
 </html>

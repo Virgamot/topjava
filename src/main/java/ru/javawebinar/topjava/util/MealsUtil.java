@@ -51,7 +51,11 @@ public class MealsUtil {
         final List<MealWithExceed> mealsWithExceeded = new ArrayList<>();
         meals.forEach(meal -> {
             if (TimeUtil.isBetween(meal.getTime(), startTime, endTime)) {
-                mealsWithExceeded.add(createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
+                MealWithExceed mealWithExceed=createWithExceed(meal,caloriesSumByDate.get(meal.getDate())>caloriesPerDay);
+                mealWithExceed.setId(meal.getId());
+                mealsWithExceeded.add(mealWithExceed);
+
+              //  mealsWithExceeded.add(createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
             }
         });
         return mealsWithExceeded;
