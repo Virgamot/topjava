@@ -40,7 +40,7 @@ public class MealRestController {
         User user = new User();
         user.setId(AuthorizedUser.id());
         meal.setUser(user);
-        service.save(meal, AuthorizedUser.id());
+        service.update(meal, AuthorizedUser.id());
     }
 
     public void delete(int id) {

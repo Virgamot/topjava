@@ -47,6 +47,11 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
+    public void update(Meal meal, int userId) {
+         repository.save(meal, userId);
+    }
+
+    @Override
     public List<Meal> getAllFiltered(int userId, LocalDate fromDate, LocalDate toDate, LocalTime fromTime, LocalTime toTime) {
         return repository.getFilteredByDateTime(userId, fromDate, toDate, fromTime, toTime);
     }
