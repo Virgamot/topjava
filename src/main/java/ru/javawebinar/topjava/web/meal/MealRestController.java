@@ -35,11 +35,7 @@ public class MealRestController {
         return service.save(meal, AuthorizedUser.id());
     }
 
-    public void update(Meal meal, int id) {
-        meal.setId(id);
-        User user = new User();
-        user.setId(AuthorizedUser.id());
-        meal.setUser(user);
+    public void update(Meal meal) {
         service.update(meal, AuthorizedUser.id());
     }
 
