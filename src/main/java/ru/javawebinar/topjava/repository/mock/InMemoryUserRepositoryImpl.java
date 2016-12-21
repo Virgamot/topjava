@@ -42,7 +42,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User get(int id) {
         LOG.info("get " + id);
-        return repository.get(id);
+        return repository.containsKey(id)?repository.get(id):null;
     }
 
     @Override
