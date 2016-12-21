@@ -12,6 +12,7 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,6 +56,8 @@ public class MealRestController {
     }
 
     public List<MealWithExceed> getFilteredByDateTime(LocalDate fromDate, LocalDate toDate, LocalTime fromTime, LocalTime toTime) {
+        if (fromDate==null||toDate==null||fromTime==null||toTime==null)
+            return Collections.emptyList();
         return MealsUtil.getWithExceeded(service.getAllFiltered(AuthorizedUser.id(), fromDate, toDate, fromTime, toTime), AuthorizedUser.getCaloriesPerDay());
     }
 
