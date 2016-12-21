@@ -12,8 +12,6 @@ public class Meal extends BaseEntity {
 
     private User user;
 
-    private Integer id;
-
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -37,14 +35,6 @@ public class Meal extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public LocalDateTime getDateTime() {
