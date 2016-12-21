@@ -27,7 +27,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public Meal save(Meal meal, int userId) throws NotFoundException {
+    public Meal save(Meal meal, int userId) {
         return repository.save(meal, userId);
     }
 
