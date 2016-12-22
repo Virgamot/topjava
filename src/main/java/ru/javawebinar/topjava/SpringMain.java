@@ -59,11 +59,11 @@ public class SpringMain {
             for (MealWithExceed mealWithExceed : mealRestController.getAll())
                 System.out.println(mealWithExceed);
 
-            System.out.println(mealRestController.get(7).getUser().getId());
+            System.out.println(mealRestController.get(7).getUserId());
 
             System.out.println("Filtered by 30 may 10-21");
-            LocalDateTime lDT = LocalDateTime.of(2015, Month.MAY, 30, 10, 0);
-            LocalDateTime lDT2 = LocalDateTime.of(2015, Month.MAY, 30, 21, 0);
+            LocalDateTime lDT = LocalDateTime.of(2015, Month.MAY, 31, 10, 0);
+            LocalDateTime lDT2 = LocalDateTime.of(2015, Month.MAY, 31, 22, 0);
             for (MealWithExceed mealWithExceed : mealRestController.getFilteredByDateTime(lDT.toLocalDate(), lDT2.toLocalDate(), lDT.toLocalTime(), lDT2.toLocalTime()))
                 System.out.println(mealWithExceed);
 

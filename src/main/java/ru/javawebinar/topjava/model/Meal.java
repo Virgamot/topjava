@@ -10,7 +10,9 @@ import java.time.LocalTime;
  */
 public class Meal extends BaseEntity {
 
-    private User user;
+//    private User user;
+
+    private int userId;
 
     private final LocalDateTime dateTime;
 
@@ -29,12 +31,20 @@ public class Meal extends BaseEntity {
         this.calories = calories;
     }
 
-    public User getUser() {
+    /*public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }*/
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getDateTime() {

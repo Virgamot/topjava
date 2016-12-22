@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.service.MealServiceImpl;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
@@ -29,9 +27,7 @@ public class MealRestController {
     }
 
     public Meal create(Meal meal) {
-        User user = new User();
-        user.setId(AuthorizedUser.id());
-        meal.setUser(user);
+        meal.setUserId(AuthorizedUser.id());
         return service.save(meal, AuthorizedUser.id());
     }
 
