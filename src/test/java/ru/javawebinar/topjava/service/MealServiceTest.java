@@ -43,8 +43,8 @@ public class MealServiceTest {
 
     @Test
     public void testGet() throws Exception {
-            Meal meal=service.get(MEAL_0.getId(),ADMIN_ID);
-            MATCHER.assertEquals(MEAL_0,meal);
+        Meal meal = service.get(MEAL_0.getId(), ADMIN_ID);
+        MATCHER.assertEquals(MEAL_0, meal);
     }
 
     @Test

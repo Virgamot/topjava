@@ -27,16 +27,16 @@ public class MealTestData {
 
 
     public static final Meal MEAL_0 = new Meal(START_SEQ, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500);
-    public static final Meal MEAL_1 = new Meal(START_SEQ+1, LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000);
-    public static final Meal MEAL_2 = new Meal(START_SEQ+2, LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500);
-    public static final Meal MEAL_3 = new Meal(START_SEQ+3, LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000);
-    public static final Meal MEAL_4 = new Meal(START_SEQ+4, LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500);
-    public static final Meal MEAL_5 = new Meal(START_SEQ+5, LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510);
+    public static final Meal MEAL_1 = new Meal(START_SEQ + 1, LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000);
+    public static final Meal MEAL_2 = new Meal(START_SEQ + 2, LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500);
+    public static final Meal MEAL_3 = new Meal(START_SEQ + 3, LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000);
+    public static final Meal MEAL_4 = new Meal(START_SEQ + 4, LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500);
+    public static final Meal MEAL_5 = new Meal(START_SEQ + 5, LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510);
 
     public static final ModelMatcher<Meal> MATCHER = new ModelMatcher<>(((expected, actual) -> expected == actual ||
-            (Objects.equals(expected.getDateTime(),actual.getDateTime())
-            &&Objects.equals(expected.getCalories(),actual.getCalories())
-            &&Objects.equals(expected.getDescription(),actual.getDescription())
-            &&Objects.equals(expected.getId(),actual.getId()))));
+            (Objects.equals(expected.getDateTime(), actual.getDateTime())
+                    && Objects.equals(expected.getCalories(), actual.getCalories())
+                    && Objects.equals(expected.getDescription(), actual.getDescription())
+                    && Objects.equals(expected.getId(), actual.getId()))));
 
 }
