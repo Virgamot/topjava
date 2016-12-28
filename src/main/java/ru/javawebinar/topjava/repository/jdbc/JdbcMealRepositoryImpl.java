@@ -30,10 +30,12 @@ import java.util.List;
 @Repository
 public class JdbcMealRepositoryImpl implements MealRepository {
 
-    private static final RowMapper<Meal> ROW_MAPPER = (rs, i) -> new Meal(rs.getInt("id"),
+   private static final RowMapper<Meal> ROW_MAPPER = (rs, i) -> new Meal(rs.getInt("id"),
             rs.getTimestamp("date").toLocalDateTime(),
             rs.getString("description"),
             rs.getInt("calories"));
+
+   /* private static final BeanPropertyRowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);*/
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -64,13 +66,12 @@ public class JdbcMealRepositoryImpl implements MealRepository {
         if (meal.isNew()) {
             Number newKey = insertMeal.executeAndReturnKey(map);
             meal.setId(newKey.intValue());
-        } else {
-
-            return namedParameterJdbcTemplate
-                    .update("UPDATE meals SET description=:description, date=:date, calories=:calories" +
-                            " WHERE id=:id AND user_id=:user_id", map) != 0 ? meal : null;
         }
-        return meal;
+
+        return namedParameterJdbcTemplate
+                .update("UPDATE meals SET description=:description, date=:date, calories=:calories" +
+                        " WHERE id=:id AND user_id=:user_id", map) != 0 ? meal : null;
+
     }
 
     @Override
@@ -92,7 +93,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return jdbcTemplate.query("SELECT * FROM  meals WHERE user_id = ? AND date BETWEEN ? AND ?"
-                , ROW_MAPPER, userId, Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
+                , ROW_MAPPER, userId, startDate, endDate);
     }
 
 }
