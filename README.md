@@ -9,6 +9,7 @@ Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery +
     вы начинаете понимать это
 
     Старинная китайская поговорка
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/604dbb0c9ccb4e059f236b6f128f4c90)](https://www.codacy.com/app/Virgamot/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Virgamot/topjava&amp;utm_campaign=Badge_Grade)
 
 ## <a href="description.md">Описание и план проекта</a>
 ### <a href="http://topjava.herokuapp.com/" target=_blank>Демо разрабатываемого приложения</a>
