@@ -23,8 +23,8 @@ import static ru.javawebinar.topjava.UserTestData.USER;
  * GKislin
  * 13.03.2015.
  */
-@Ignore
-@ContextConfiguration({"classpath:spring/spring-app.xml","classpath:spring/spring-mvc.xml", "classpath:spring/mock.xml"})
+
+@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/mock.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 

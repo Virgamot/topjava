@@ -25,63 +25,56 @@ public class MealController {
     @Autowired
     private MealRestController controller;
 
-    @RequestMapping(value = "/meals",method = RequestMethod.GET)
-    public String mealList(Model model, HttpServletRequest request)
-    {
-        String action=request.getParameter("action");
+    @RequestMapping(value = "/meals", method = RequestMethod.GET)
+    public String mealList(Model model, HttpServletRequest request) {
+        String action = request.getParameter("action");
 
-        if (action==null){
-            request.setAttribute("meals",controller.getAll());
-            model.addAttribute("meals",controller.getAll());
+        if (action == null) {
+            request.setAttribute("meals", controller.getAll());
+            model.addAttribute("meals", controller.getAll());
             return "meals";
-        }else if ("delete".equals(action)){
+        } else if ("delete".equals(action)) {
             controller.delete(getId(request));
             return "redirect:meals";
-        }else if ("update".equals(action)){
-            model.addAttribute("meal",controller.get(getId(request)));
+        } else if ("update".equals(action)) {
+            model.addAttribute("meal", controller.get(getId(request)));
             return "meal";
-        }else if ("create".equals(action)){
-            Meal meal=new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),"",0);
-            model.addAttribute("meal",meal);
+        } else if ("create".equals(action)) {
+            Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 0);
+            model.addAttribute("meal", meal);
             return "meal";
         }
-
 //        model.addAttribute("meals",controller.getAll());
         return "meals";
     }
 
     @RequestMapping(value = "/meals", method = RequestMethod.POST)
-    public String updateMeal (Model model, HttpServletRequest request)
-    {
-        String action=request.getParameter("action");
+    public String updateMeal(Model model, HttpServletRequest request) {
+        String action = request.getParameter("action");
 
-        if (action==null)
-        {
-            final Meal meal=new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
-                                    request.getParameter("description"),
-                                    Integer.parseInt(request.getParameter("calories")));
+        if (action == null) {
+            final Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.parseInt(request.getParameter("calories")));
 
-            if(request.getParameter("id").isEmpty())
+            if (request.getParameter("id").isEmpty())
                 controller.create(meal);
-            else controller.update(meal,getId(request));
+            else controller.update(meal, getId(request));
             return "redirect:meals";
-
-        }else if("filter".equals(action))
-        {
+        } else if ("filter".equals(action)) {
             LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"));
             LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
             LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
             LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
             model.addAttribute("meals", controller.getBetween(startDate, startTime, endDate, endTime));
-            return "redirect:meals";
+            return "meals";
         }
 
         return "meals";
     }
 
-    private int getId(HttpServletRequest request)
-    {
-        String id= Objects.requireNonNull(request.getParameter("id"));
+    private int getId(HttpServletRequest request) {
+        String id = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(id);
     }
 }
