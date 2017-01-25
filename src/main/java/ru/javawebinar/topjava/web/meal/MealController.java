@@ -36,7 +36,7 @@ public class MealController {
             return "meals";
         }else if ("delete".equals(action)){
             controller.delete(getId(request));
-            return "meals";
+            return "redirect:meals";
         }else if ("update".equals(action)){
             model.addAttribute("meal",controller.get(getId(request)));
             return "meal";
@@ -46,6 +46,7 @@ public class MealController {
             return "meal";
         }
 
+//        model.addAttribute("meals",controller.getAll());
         return "meals";
     }
 
@@ -63,7 +64,7 @@ public class MealController {
             if(request.getParameter("id").isEmpty())
                 controller.create(meal);
             else controller.update(meal,getId(request));
-            return "meals";
+            return "redirect:meals";
 
         }else if("filter".equals(action))
         {
@@ -72,7 +73,7 @@ public class MealController {
             LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
             LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
             model.addAttribute("meals", controller.getBetween(startDate, startTime, endDate, endTime));
-            return "meals";
+            return "redirect:meals";
         }
 
         return "meals";
