@@ -6,10 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -60,6 +63,16 @@ public class MealController {
             if(request.getParameter("id").isEmpty())
                 controller.create(meal);
             else controller.update(meal,getId(request));
+            return "meals";
+
+        }else if("filter".equals(action))
+        {
+            LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"));
+            LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
+            LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
+            LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
+            model.addAttribute("meals", controller.getBetween(startDate, startTime, endDate, endTime));
+            return "meals";
         }
 
         return "meals";
