@@ -34,22 +34,20 @@ public class RootControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public  void testMeals() throws Exception{
+    public void testMeals() throws Exception {
         mockMvc.perform(get("/meals"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("meals"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
-                .andExpect(model().attribute("meals",hasSize(6)))
-                .andExpect(model().attribute("meals",hasItem(
-
+                .andExpect(model().attribute("meals", hasSize(6)))
+                .andExpect(model().attribute("meals", hasItem(
                         allOf(
                                 hasProperty("id", is(MEAL1.getId())),
                                 hasProperty("calories", is(MEAL1.getCalories())),
-                                hasProperty("description",is(MEAL1.getDescription())),
-                                hasProperty("dateTime",is(MEAL1.getDateTime()))
+                                hasProperty("description", is(MEAL1.getDescription())),
+                                hasProperty("dateTime", is(MEAL1.getDateTime()))
                         )
                 )));
-
     }
 }
