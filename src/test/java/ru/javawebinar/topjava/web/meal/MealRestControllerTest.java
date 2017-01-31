@@ -30,64 +30,64 @@ import static ru.javawebinar.topjava.web.meal.MealRestController.REST_URL;
  */
 public class MealRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL=MealRestController.REST_URL+'/';
+    private static final String REST_URL = MealRestController.REST_URL + '/';
 
     @Test
     public void testGet() throws Exception {
-        TestUtil.print(mockMvc.perform(get(REST_URL+MEAL1_ID))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andExpect(MATCHER.contentMatcher(MEAL1))
+        TestUtil.print(mockMvc.perform(get(REST_URL + MEAL1_ID))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentMatcher(MEAL1))
         );
     }
 
     @Test
-    public void testDelete() throws Exception{
-        mockMvc.perform(delete(REST_URL+MEAL1_ID))
-                        .andExpect(status().isOk());
+    public void testDelete() throws Exception {
+        mockMvc.perform(delete(REST_URL + MEAL1_ID))
+                .andExpect(status().isOk());
 
-        List<Meal> meals= Arrays.asList(MEAL6,MEAL5,MEAL4,MEAL3,MEAL2);
-        MATCHER.assertCollectionEquals(meals,mealService.getAll(AuthorizedUser.id));
+        List<Meal> meals = Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
+        MATCHER.assertCollectionEquals(meals, mealService.getAll(AuthorizedUser.id));
     }
 
     @Test
-    public void testGetAll() throws Exception{
+    public void testGetAll() throws Exception {
         mockMvc.perform(get(REST_URL))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MealsUtil.getWithExceeded(MEALS,2000)));
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MealsUtil.getWithExceeded(MEALS, 2000)));
     }
 
 
     @Test
-    public void testUpdate() throws Exception{
-        Meal updated=new Meal(MEAL1.getId(),MEAL1.getDateTime(),MEAL1.getDescription(),MEAL1.getCalories());
+    public void testUpdate() throws Exception {
+        Meal updated = new Meal(MEAL1.getId(), MEAL1.getDateTime(), MEAL1.getDescription(), MEAL1.getCalories());
         updated.setDescription("UpdatedName");
 
-        mockMvc.perform(put(REST_URL+MEAL1_ID)
+        mockMvc.perform(put(REST_URL + MEAL1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isOk());
 
-        MATCHER.assertEquals(updated,mealService.get(MEAL1_ID,AuthorizedUser.id));
+        MATCHER.assertEquals(updated, mealService.get(MEAL1_ID, AuthorizedUser.id));
     }
 
     @Test
-    public void testCreate() throws Exception{
-        Meal expected=new Meal(null, LocalDateTime.now(),"New",999);
+    public void testCreate() throws Exception {
+        Meal expected = new Meal(null, LocalDateTime.now(), "New", 999);
 
         ResultActions action = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected))).andExpect(status().isCreated());
 
-        Meal returned=MATCHER.fromJsonAction(action);
+        Meal returned = MATCHER.fromJsonAction(action);
         expected.setId(returned.getId());
 
-        MATCHER.assertEquals(expected,returned);
-        List<Meal> meals=new ArrayList<>();
+        MATCHER.assertEquals(expected, returned);
+        List<Meal> meals = new ArrayList<>();
         meals.add(expected);
         meals.addAll(MEALS);
-        MATCHER.assertCollectionEquals(meals,mealService.getAll(AuthorizedUser.id));
+        MATCHER.assertCollectionEquals(meals, mealService.getAll(AuthorizedUser.id));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .param("endDate", "2015-05-30T21:00:00")
                 .param("endTime", "2015-05-30T21:00:00"))
                 .andExpect(status().isOk())
-                //.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MealsUtil.getWithExceeded(Arrays.asList(MEAL3, MEAL2),2000))));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MealsUtil.getWithExceeded(Arrays.asList(MEAL3, MEAL2), 2000))));
     }
 
 }
