@@ -2,11 +2,13 @@ package ru.javawebinar.topjava.web.meal;
 
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
@@ -31,6 +33,9 @@ import static ru.javawebinar.topjava.web.meal.MealRestController.REST_URL;
 public class MealRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = MealRestController.REST_URL + '/';
+
+    @Autowired
+    private MealService mealService;
 
     @Test
     public void testGet() throws Exception {
@@ -92,7 +97,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetBetween() throws Exception {
-        TestUtil.print(mockMvc.perform(get(REST_URL)
+        TestUtil.print(mockMvc.perform(get(REST_URL + "/filter")
                 .param("startDate", "2015-05-30T12:00:00")
                 .param("startTime", "2015-05-30T12:00:00")
                 .param("endDate", "2015-05-30T21:00:00")

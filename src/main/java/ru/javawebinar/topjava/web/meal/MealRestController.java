@@ -22,8 +22,9 @@ import java.util.List;
 @RequestMapping(MealRestController.REST_URL)
 public class MealRestController extends AbstractMealController {
     static final String REST_URL = "/rest/meals";
+    private static final String APPLICATION_JSON_VALUE = MediaType.APPLICATION_JSON_VALUE;
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public Meal get(@PathVariable("id") int id) {
         return super.get(id);
     }
@@ -33,17 +34,17 @@ public class MealRestController extends AbstractMealController {
         super.delete(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getAll() {
         return super.getAll();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
     public void update(@RequestBody Meal meal, @PathVariable("id") int id) {
         super.update(meal, id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal) {
         Meal created = super.create(meal);
 
@@ -54,7 +55,7 @@ public class MealRestController extends AbstractMealController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"startDate", "startTime", "endDate", "endTime"})
+    @GetMapping(value = "/filter", produces = APPLICATION_JSON_VALUE, params = {"startDate", "startTime", "endDate", "endTime"})
     public List<MealWithExceed> getBetween(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalTime startTime,
                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
