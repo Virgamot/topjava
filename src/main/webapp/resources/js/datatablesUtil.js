@@ -1,7 +1,9 @@
 function makeEditable() {
-    $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
-    });
+    /*
+     $('.delete').click(function () {
+     deleteRow($(this).attr("id"));
+     });
+     */
 
     $('#detailsForm').submit(function () {
         save();
