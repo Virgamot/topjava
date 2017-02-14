@@ -1,11 +1,16 @@
 package ru.javawebinar.topjava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -48,6 +53,12 @@ public class MealServiceImpl implements MealService {
     public Meal update(Meal meal, int userId) {
         Assert.notNull(meal, "meal must not be null");
         return checkNotFoundWithId(repository.save(meal, userId), meal.getId());
+    }
+
+    @Override
+    public Meal update(MealWithExceed mealWithExceed, int userId) throws NotFoundException {
+        Meal meal = get(mealWithExceed.getId(), userId);
+        return repository.save(MealsUtil.updateFromTo(meal, mealWithExceed), userId);
     }
 
     @Override
