@@ -47,6 +47,11 @@ public class MealAjaxController extends AbstractMealController {
         }
     }*/
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Meal get(@PathVariable("id") int id) {
+        return super.get(id);
+    }
+
     @PostMapping
     public ResponseEntity<String> updateOrCreate(@Valid MealWithExceed mealTo, BindingResult result) {
         if (result.hasErrors()) {
