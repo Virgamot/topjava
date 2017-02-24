@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.to.UserTo;
 import ru.javawebinar.topjava.util.UserUtil;
+import ru.javawebinar.topjava.util.exception.EmailAlreadyExistsException;
 import ru.javawebinar.topjava.web.user.AbstractUserController;
 
 import javax.validation.Valid;
@@ -26,7 +28,7 @@ public class RootController extends AbstractUserController {
         return "redirect:meals";
     }
 
-//    @Secured("ROLE_ADMIN")
+    //    @Secured("ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     public String users() {
@@ -53,7 +55,11 @@ public class RootController extends AbstractUserController {
         if (result.hasErrors()) {
             return "profile";
         } else {
-            super.update(userTo);
+            try {
+                super.update(userTo);
+            } catch (DataIntegrityViolationException e) {
+                throw new EmailAlreadyExistsException();
+            }
             AuthorizedUser.get().update(userTo);
             status.setComplete();
             return "redirect:meals";
@@ -73,7 +79,11 @@ public class RootController extends AbstractUserController {
             model.addAttribute("register", true);
             return "profile";
         } else {
-            super.create(UserUtil.createNewFromTo(userTo));
+            try {
+                super.create(UserUtil.createNewFromTo(userTo));
+            } catch (DataIntegrityViolationException e) {
+                throw new EmailAlreadyExistsException();
+            }
             status.setComplete();
             return "redirect:login?message=app.registered&username=" + userTo.getEmail();
         }

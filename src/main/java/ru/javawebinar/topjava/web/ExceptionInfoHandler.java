@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import ru.javawebinar.topjava.util.exception.EmailAlreadyExistsException;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.InvalidEntityException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -36,6 +37,9 @@ public class ExceptionInfoHandler {
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        if (req.getServletPath().equals("/ajax/admin/users/")){
+            return logAndGetErrorInfo(req, new EmailAlreadyExistsException(), true);
+        }
         return logAndGetErrorInfo(req, e, true);
     }
 
@@ -60,6 +64,9 @@ public class ExceptionInfoHandler {
     @ResponseBody
     @Order(Ordered.LOWEST_PRECEDENCE)
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
+        if (req.getServletPath().equals("/ajax/admin/users/")&&(e instanceof IllegalArgumentException)){
+            return logAndGetErrorInfo(req, new EmailAlreadyExistsException(), true);
+        }
         return logAndGetErrorInfo(req, e, true);
     }
 
