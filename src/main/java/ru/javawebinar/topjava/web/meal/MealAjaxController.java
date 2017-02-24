@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.util.exception.InvalidEntityException;
+
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -41,7 +43,15 @@ public class MealAjaxController extends AbstractMealController {
     }
 
     @PostMapping
-    public void updateOrCreate(@Valid Meal meal) {
+    public void updateOrCreate(@Valid Meal meal, BindingResult result) {
+
+        if (result.hasErrors())
+        {
+            StringBuilder sb = new StringBuilder();
+            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
+            throw new InvalidEntityException(sb.toString());
+        }
+
         if (meal.isNew()) {
             super.create(meal);
         } else {

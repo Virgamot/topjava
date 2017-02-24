@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.UserTo;
 import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
+import ru.javawebinar.topjava.util.exception.InvalidEntityException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -39,7 +40,15 @@ public class AdminAjaxController extends AbstractUserController {
     }
 
     @PostMapping
-    public void createOrUpdate(@Valid UserTo userTo) {
+    public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
+
+        if (result.hasErrors())
+        {
+            StringBuilder sb = new StringBuilder();
+            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
+            throw new InvalidEntityException(sb.toString());
+        }
+
         if (userTo.isNew()) {
             super.create(UserUtil.createNewFromTo(userTo));
         } else {
