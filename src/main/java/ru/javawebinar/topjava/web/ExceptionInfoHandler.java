@@ -37,10 +37,8 @@ public class ExceptionInfoHandler {
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-        if (req.getServletPath().equals("/ajax/admin/users/")){
-            return logAndGetErrorInfo(req, new EmailAlreadyExistsException(), true);
-        }
-        return logAndGetErrorInfo(req, e, true);
+        return req.getServletPath().equals("/ajax/admin/users/")?
+                logAndGetErrorInfo(req, new EmailAlreadyExistsException(), true):logAndGetErrorInfo(req, e, true);
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -64,10 +62,8 @@ public class ExceptionInfoHandler {
     @ResponseBody
     @Order(Ordered.LOWEST_PRECEDENCE)
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
-        if (req.getServletPath().equals("/ajax/admin/users/")&&(e instanceof IllegalArgumentException)){
-            return logAndGetErrorInfo(req, new EmailAlreadyExistsException(), true);
-        }
-        return logAndGetErrorInfo(req, e, true);
+        return (req.getServletPath().equals("/ajax/admin/users/")&&(e instanceof IllegalArgumentException))?
+                logAndGetErrorInfo(req, new EmailAlreadyExistsException(), true):logAndGetErrorInfo(req, e, true);
     }
 
     public ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException) {
